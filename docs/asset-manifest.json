@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/depp-cbaitembuilder-integration-2022-science/static/css/main.4b491453.chunk.css",
+    "main.js": "/depp-cbaitembuilder-integration-2022-science/static/js/main.6699bdc0.chunk.js",
+    "main.js.map": "/depp-cbaitembuilder-integration-2022-science/static/js/main.6699bdc0.chunk.js.map",
+    "runtime-main.js": "/depp-cbaitembuilder-integration-2022-science/static/js/runtime-main.ac05e273.js",
+    "runtime-main.js.map": "/depp-cbaitembuilder-integration-2022-science/static/js/runtime-main.ac05e273.js.map",
+    "static/js/2.fd75c1eb.chunk.js": "/depp-cbaitembuilder-integration-2022-science/static/js/2.fd75c1eb.chunk.js",
+    "static/js/2.fd75c1eb.chunk.js.map": "/depp-cbaitembuilder-integration-2022-science/static/js/2.fd75c1eb.chunk.js.map",
+    "index.html": "/depp-cbaitembuilder-integration-2022-science/index.html",
+    "static/css/main.4b491453.chunk.css.map": "/depp-cbaitembuilder-integration-2022-science/static/css/main.4b491453.chunk.css.map",
+    "static/js/2.fd75c1eb.chunk.js.LICENSE.txt": "/depp-cbaitembuilder-integration-2022-science/static/js/2.fd75c1eb.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ac05e273.js",
+    "static/js/2.fd75c1eb.chunk.js",
+    "static/css/main.4b491453.chunk.css",
+    "static/js/main.6699bdc0.chunk.js"
+  ]
+}
