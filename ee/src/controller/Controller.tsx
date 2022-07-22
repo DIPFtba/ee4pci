@@ -324,6 +324,8 @@ function findCompatiblePlayerAndStartTask(
  *  - Configure the transmission channel for the trace log data.
  *  - Show a login box.
  */
+
+/*
  function initializeSessionAndShowLogin(
    targetWindow: MessageEventSource, 
    logTransmissionConfig: LogTransmissionConfiguration | undefined, 
@@ -356,7 +358,7 @@ function findCompatiblePlayerAndStartTask(
     showLogin(targetWindow);
   }
 }
-
+*/
 
 /**
  * Establish ourselves as task sequencer in CBA runtime.
