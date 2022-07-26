@@ -51,7 +51,7 @@ export function sendMessageToTaskPlayer(targetWindow : MessageEventSource, paylo
     { eventType: 'activateDebuggingWindows', scoreHotKey: string, traceHotKey: string, statemachineHotKey: string} 
   ) 
 {
-  targetWindow.postMessage(JSON.stringify(payload), { targetOrigin: '*'});    
+  targetWindow.postMessage(JSON.stringify(payload), { targetOrigin: '*'});
 }
 
 

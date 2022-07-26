@@ -119,7 +119,15 @@ export function configureMessageReceiver(
   messageReceiver.setPlayerReadyListener((sendingWindow) => {
     playerCatalog.receiveReadySignal(sendingWindow);
     // initializeSessionAndShowLogin(sendingWindow, controllerConfig.traceLogTransmission, playerCatalog)
+
     // setUserId("DEPP", sendingWindow);
+    sendMessageToTaskPlayer(sendingWindow, {
+      eventType: 'setTraceLogTransmissionChannel', 
+      channel: 'postMessage', 
+      interval: 5000, 
+      targetWindowType: "parent"
+    });    
+    sendMessageToTaskPlayer(sendingWindow, {eventType: 'setTraceContextId', contextId: buildTraceContextId()});
     playerCatalog.doToAll((targetWindow: MessageEventSource) => setUserId("DEPP", targetWindow));
     playerCatalog.doToAll((targetWindow: MessageEventSource) => setTaskSequencer(targetWindow));
     downloadAssessmentConfig()
@@ -133,11 +141,6 @@ export function configureMessageReceiver(
       .catch((error) => {
         console.warn(`Could not initialize assessment properly: ${error.message}`);
       });
-      sendMessageToTaskPlayer(sendingWindow, {
-        eventType: 'setTraceLogTransmissionChannel', 
-        channel: 'postMessage', 
-        interval: 2000, 
-        targetWindowType: "parent"});      
   });
 
 }
@@ -325,7 +328,7 @@ function findCompatiblePlayerAndStartTask(
  *  - Show a login box.
  */
 
-/*
+
  function initializeSessionAndShowLogin(
    targetWindow: MessageEventSource, 
    logTransmissionConfig: LogTransmissionConfiguration | undefined, 
@@ -358,7 +361,7 @@ function findCompatiblePlayerAndStartTask(
     showLogin(targetWindow);
   }
 }
-*/
+
 
 /**
  * Establish ourselves as task sequencer in CBA runtime.

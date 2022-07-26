@@ -92,12 +92,12 @@
             return ev.returnValue = 'Should the task really be reloaded?';
         });
 
-        if(!!parent && parent !== window){
-            window.addEventListener('message', (event) => {
-              console.log(event);           
-              parent.postMessage(event.data, "*");
-            });
-        }
+        window.addEventListener('message', (event) => {
+            console.log(event);           
+            if(!!parent && parent !== window){
+                parent.postMessage(event.data, "*");
+            }
+        });
 
     </script>         
   </head>
