@@ -125,6 +125,7 @@ export function configureMessageReceiver(
       eventType: 'setTraceLogTransmissionChannel', 
       channel: 'postMessage', 
       interval: 5000, 
+      targetOrigin: '*', 
       targetWindowType: "parent"
     });    
     sendMessageToTaskPlayer(sendingWindow, {eventType: 'setTraceContextId', contextId: buildTraceContextId()});
@@ -347,7 +348,8 @@ function findCompatiblePlayerAndStartTask(
     sendMessageToTaskPlayer(targetWindow, {
       eventType: 'setTraceLogTransmissionChannel', 
       channel: 'postMessage', 
-      interval: 2000, 
+      interval: 5000,
+      targetOrigin: '*', 
       targetWindowType: "parent"});
   }
   
