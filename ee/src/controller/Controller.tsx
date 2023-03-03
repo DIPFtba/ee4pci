@@ -12,6 +12,7 @@ import TaskSequencer, { Decision } from "./TaskSequencer";
 import { TaskIdentification } from "../utils/FileDownload";
 import PlayerCatalog from '../runtime/PlayerCatalog';
 import ItemCatalog from '../runtime/ItemCatalog';
+import queryString from 'query-string';
 
 /**
  * Controller coordinating actions required to run the tasks list in the available task players.
@@ -131,16 +132,16 @@ export function configureMessageReceiver(
     playerCatalog.receiveReadySignal(sendingWindow);
     // initializeSessionAndShowLogin(sendingWindow, controllerConfig.traceLogTransmission, playerCatalog)
 
-    // setUserId("DEPP", sendingWindow);
     sendMessageToTaskPlayer(sendingWindow, {
       eventType: 'setTraceLogTransmissionChannel', 
       channel: 'postMessage', 
       interval: 5000, 
       targetOrigin: '*', 
       targetWindowType: "parent"
-    });    
+    });
+    let userId = queryString.parse(window.location.search)?.userId ?? "default";
     sendMessageToTaskPlayer(sendingWindow, {eventType: 'setTraceContextId', contextId: buildTraceContextId()});
-    playerCatalog.doToAll((targetWindow: MessageEventSource) => setUserId("DEPP", targetWindow));
+    playerCatalog.doToAll((targetWindow: MessageEventSource) => setUserId(userId.toString(), targetWindow));
     playerCatalog.doToAll((targetWindow: MessageEventSource) => setTaskSequencer(targetWindow));
     downloadAssessmentConfig()
       .then((configuration) => {
@@ -153,6 +154,15 @@ export function configureMessageReceiver(
       .catch((error) => {
         console.warn(`Could not initialize assessment properly: ${error.message}`);
       });
+  });
+
+  messageReceiver.setGetScoringResultListener((sendingWindow, data) => {
+    console.log(data);
+    if(!(sendingWindow === window)){
+      playerCatalog.doToAll((frame) => {
+        getScoringResult(frame);
+      })
+    }
   });
 
 }
@@ -248,6 +258,7 @@ function loadItemsAndStartFirstTask(
       if (firstTask === undefined) {
         throw new Error(`Invalid task sequencer configuration blocks starting the first task.`);
       }
+      window.postMessage(JSON.stringify({eventType: "itemsLoadedInPlayer", playerCount: playerCatalog.getPlayerIds().length}),"*");
       findCompatiblePlayerAndStartTask(firstTask, playerCatalog, itemCatalog)
     })
     .catch((error) => {

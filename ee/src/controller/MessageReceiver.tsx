@@ -21,6 +21,9 @@ export default class MessageReceiver {
 
   private taskSwitchRequestListener : ((source: MessageEventSource, request: RequestType, requestDetails?: TaskRequestDetails) => void) | 'noListener' = 'noListener'; 
 
+  //pass external scoringResult requests to the runtime
+  private getScoringResultListener : ((source: MessageEventSource, result: string) => void) | 'noListener' = 'noListener'; 
+
   /**
    * Start to receive messages.
    */
@@ -71,6 +74,11 @@ export default class MessageReceiver {
     this.taskSwitchRequestListener = listener;
   }
 
+
+  public setGetScoringResultListener(listener: (source: MessageEventSource, result: string) => void) : void {
+    this.getScoringResultListener = listener;
+  }
+
   private processMessageEvent(event : MessageEvent<any>) : void {
     const { origin, data, source } = event;
 
@@ -78,6 +86,19 @@ export default class MessageReceiver {
       console.warn(`Ignoring message without source.`);
       return;
     }
+
+    //allow external parent frame to send getScoringResult requests
+    try {
+      let tmp = JSON.parse(data);
+      if(tmp?.eventType == "getScoringResult" && this.getScoringResultListener !== 'noListener'){
+        this.getScoringResultListener(source, JSON.stringify(tmp));
+        return;
+      }
+    } catch (e) {
+      console.info(`Ignoring message with non-JSON data: ${data}`);
+      return;      
+    }
+
 
     if (origin !== window.origin) {
       console.warn(`Ignoring message from wrong origin. Message origin is ${origin}. Accepted origin is ${window.origin}.`);
