@@ -157,7 +157,7 @@ export function configureMessageReceiver(
   });
 
   messageReceiver.setGetScoringResultListener((sendingWindow, data) => {
-    console.log(data);
+    // console.log(data);
     if(!(sendingWindow === window)){
       playerCatalog.doToAll((frame) => {
         getScoringResult(frame);
