@@ -165,6 +165,10 @@ export function configureMessageReceiver(
     }
   });
 
+  messageReceiver.setTraceLogListener((sendingWindow, data) => {
+    getScoringResult(sendingWindow);
+  });
+
 }
 
 /**

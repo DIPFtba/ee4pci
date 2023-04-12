@@ -171,7 +171,7 @@ export default class MessageReceiver {
       return;
     }
 
-    console.warn(`Ignoring message not matching any listener: ${data}`)
+    // console.warn(`Ignoring message not matching any listener: ${data}`)
 
   }
 }
