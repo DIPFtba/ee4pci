@@ -84,13 +84,14 @@
                 };
             }
             })(window);
-      
+      /*
         window.addEventListener("beforeunload", (ev) => 
         {  
             // todo: try to save snapshot
             ev.preventDefault();
             return ev.returnValue = 'Should the task really be reloaded?';
         });
+      */
 
         window.addEventListener('message', (event) => {
             console.log(event);           
