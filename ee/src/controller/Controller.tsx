@@ -174,6 +174,15 @@ export function configureMessageReceiver(
     }
   });
 
+  messageReceiver.setPreloadTasksStateListener((sendingWindow, data) => {
+    // console.log(data);
+    if(!(sendingWindow === window)){
+      playerCatalog.doToAll((frame) => {
+        preloadTasksState(data, frame);
+      })
+    }
+  });
+
   messageReceiver.setTraceLogListener((sendingWindow, data) => {
     getScoringResult(sendingWindow);
   });
@@ -433,6 +442,13 @@ function getScoringResult(targetWindow: MessageEventSource) : void {
  */
 function getTasksState(targetWindow: MessageEventSource) : void {
   sendMessageToTaskPlayer(targetWindow, { eventType: 'getTasksState'});
+}
+
+/**
+ * Preload tasks state.
+ */
+function preloadTasksState(state: string, targetWindow: MessageEventSource) : void {
+  sendMessageToTaskPlayer(targetWindow, { eventType: 'preloadTasksState', state});
 }
 
 /**

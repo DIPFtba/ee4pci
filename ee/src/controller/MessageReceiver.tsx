@@ -22,10 +22,11 @@ export default class MessageReceiver {
   private taskSwitchRequestListener : ((source: MessageEventSource, request: RequestType, requestDetails?: TaskRequestDetails) => void) | 'noListener' = 'noListener'; 
 
   //pass external scoringResult requests to the runtime
-  private getScoringResultListener : ((source: MessageEventSource, result: string) => void) | 'noListener' = 'noListener'; 
+  private getScoringResultListener : ((source: MessageEventSource, request: string) => void) | 'noListener' = 'noListener'; 
   
   //pass external tasksState requests to the runtime
-  private getTasksStateListener : ((source: MessageEventSource, result: string) => void) | 'noListener' = 'noListener'; 
+  private getTasksStateListener : ((source: MessageEventSource, request: string) => void) | 'noListener' = 'noListener'; 
+  private preloadTasksStateListener : ((source: MessageEventSource, state: string) => void) | 'noListener' = 'noListener'; 
 
   /**
    * Start to receive messages.
@@ -84,6 +85,9 @@ export default class MessageReceiver {
   public setGetTasksStateListener(listener: (source: MessageEventSource, result: string) => void) : void {
     this.getTasksStateListener = listener;
   }
+  public setPreloadTasksStateListener(listener: (source: MessageEventSource, result: string) => void) : void {
+    this.preloadTasksStateListener = listener;
+  }
 
   private processMessageEvent(event : MessageEvent<any>) : void {
     const { origin, data, source } = event;
@@ -97,11 +101,15 @@ export default class MessageReceiver {
     try {
       let tmp = JSON.parse(data);
       if(tmp?.eventType == "getScoringResult" && this.getScoringResultListener !== 'noListener'){
-        this.getScoringResultListener(source, JSON.stringify(tmp));
+        this.getScoringResultListener(source, data);
         return;
       }
       else if(tmp?.eventType == "getTasksState" && this.getTasksStateListener !== 'noListener'){
-        this.getTasksStateListener(source, JSON.stringify(tmp));
+        this.getTasksStateListener(source, data);
+        return;
+      }
+      else if(tmp?.eventType == "preloadTasksState" && this.preloadTasksStateListener !== 'noListener'){
+        this.preloadTasksStateListener(source, data);
         return;
       }
     } catch (e) {
