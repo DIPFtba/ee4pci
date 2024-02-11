@@ -447,11 +447,12 @@ function getTasksState(targetWindow: MessageEventSource) : void {
 /**
  * Preload tasks state.
  */
-function preloadTasksState(state: string, targetWindow: MessageEventSource) : void {
+function preloadTasksState(msg: string, targetWindow: MessageEventSource) : void {
   try {
-    let stateObj = JSON.parse(state);
-    let scope = Object.keys(stateObj?.taskNavigatorState)[0];
-    let entryTask = {item: stateObj.taskNavigatorState[scope]["itemName"], task: stateObj.taskNavigatorState[scope]["taskName"], scope} as TaskIdentification;
+    let stateObj = JSON.parse(msg);
+    let scope = Object.keys(stateObj?.state?.taskNavigatorState)[0];
+    let entryTask = {item: stateObj.state.taskNavigatorState[scope]["itemName"], task: stateObj.state.taskNavigatorState[scope]["taskName"], scope} as TaskIdentification;
+    let state = JSON.stringify(stateObj.state);
 
     stopTask(targetWindow);
     sendMessageToTaskPlayer(targetWindow, { eventType: 'preloadTasksState', state});
