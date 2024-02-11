@@ -23,6 +23,9 @@ export default class MessageReceiver {
 
   //pass external scoringResult requests to the runtime
   private getScoringResultListener : ((source: MessageEventSource, result: string) => void) | 'noListener' = 'noListener'; 
+  
+  //pass external tasksState requests to the runtime
+  private getTasksStateListener : ((source: MessageEventSource, result: string) => void) | 'noListener' = 'noListener'; 
 
   /**
    * Start to receive messages.
@@ -78,6 +81,9 @@ export default class MessageReceiver {
   public setGetScoringResultListener(listener: (source: MessageEventSource, result: string) => void) : void {
     this.getScoringResultListener = listener;
   }
+  public setGetTasksStateListener(listener: (source: MessageEventSource, result: string) => void) : void {
+    this.getTasksStateListener = listener;
+  }
 
   private processMessageEvent(event : MessageEvent<any>) : void {
     const { origin, data, source } = event;
@@ -87,11 +93,15 @@ export default class MessageReceiver {
       return;
     }
 
-    //allow external parent frame to send getScoringResult requests
+    //allow external parent frame to send getScoringResult / getTasksState requests
     try {
       let tmp = JSON.parse(data);
       if(tmp?.eventType == "getScoringResult" && this.getScoringResultListener !== 'noListener'){
         this.getScoringResultListener(source, JSON.stringify(tmp));
+        return;
+      }
+      else if(tmp?.eventType == "getTasksState" && this.getTasksStateListener !== 'noListener'){
+        this.getTasksStateListener(source, JSON.stringify(tmp));
         return;
       }
     } catch (e) {

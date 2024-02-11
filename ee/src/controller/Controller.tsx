@@ -165,6 +165,15 @@ export function configureMessageReceiver(
     }
   });
 
+  messageReceiver.setGetTasksStateListener((sendingWindow, data) => {
+    // console.log(data);
+    if(!(sendingWindow === window)){
+      playerCatalog.doToAll((frame) => {
+        getTasksState(frame);
+      })
+    }
+  });
+
   messageReceiver.setTraceLogListener((sendingWindow, data) => {
     getScoringResult(sendingWindow);
   });
@@ -417,6 +426,13 @@ function startTask(toStart: TaskIdentification, targetWindow: MessageEventSource
  */
 function getScoringResult(targetWindow: MessageEventSource) : void {
   sendMessageToTaskPlayer(targetWindow, { eventType: 'getScoringResult'});
+}
+
+/**
+ * Request tasks state.
+ */
+function getTasksState(targetWindow: MessageEventSource) : void {
+  sendMessageToTaskPlayer(targetWindow, { eventType: 'getTasksState'});
 }
 
 /**
