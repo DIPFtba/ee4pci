@@ -39,7 +39,7 @@ export function sendMessageToTaskPlayer(targetWindow : MessageEventSource, paylo
     // task state control
     { eventType: 'getTasksState'} |
     { eventType: 'clearTasksState' } |
-    { eventType: 'preloadTasksState', state: string } |
+    { eventType: 'preloadTasksState', state: object } |
     // scoring control
     { eventType: 'getScoringResult'} |
     // state machine control
