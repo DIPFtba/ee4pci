@@ -450,7 +450,7 @@ function getTasksState(targetWindow: MessageEventSource) : void {
 function preloadTasksState(msg: string, targetWindow: MessageEventSource) : void {
   try {
     let stateObj = JSON.parse(msg);
-    let scope = Object.keys(stateObj?.state?.taskNavigatorState)[0];
+    let scope = stateObj?.state?.taskNavigatorState ? Object.keys(stateObj?.state?.taskNavigatorState)[0] : "A";
     let entryTask = {item: stateObj.state.taskNavigatorState[scope]["itemName"], task: stateObj.state.taskNavigatorState[scope]["taskName"], scope} as TaskIdentification;
     // let state = JSON.stringify(stateObj.state);
 
