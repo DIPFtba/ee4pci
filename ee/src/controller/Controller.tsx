@@ -87,7 +87,7 @@ export function configureMessageReceiver(
         console.log(`Cannot follow switch request ${request}: ${decision.reason}. We ignored the request.`)
         /********* "Hack" to send PM to parent frame when the last task of the sequence has been reached to signal the end of the test *******/
         if(request === "nextTask"){
-            // getScoringResult(sendingWindow);
+            getScoringResult(sendingWindow);
             messageReceiver.setGetScoringResultReturnListener((sendingWindow: MessageEventSource, result: string) => {
                 window.parent.postMessage(
                   JSON.stringify({eventType: "endOfSequence"}),
@@ -185,10 +185,10 @@ export function configureMessageReceiver(
 
   messageReceiver.setTraceLogListener((sendingWindow, data) => {
 
-    window.setTimeout(() => {
+    // window.setTimeout(() => {
         getScoringResult(sendingWindow);
-      }, 1000
-    );
+      // }, 1000
+    // );
 
   });
 
