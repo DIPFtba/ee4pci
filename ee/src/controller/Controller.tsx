@@ -184,7 +184,12 @@ export function configureMessageReceiver(
   });
 
   messageReceiver.setTraceLogListener((sendingWindow, data) => {
-    getScoringResult(sendingWindow);
+
+    window.setTimeout(() => {
+        getScoringResult(sendingWindow);
+      }, 1000
+    );
+
   });
 
 }
