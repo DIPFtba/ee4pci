@@ -71,7 +71,7 @@
             };
 
             global.onload = function () {
-                noBackPlease();
+                // noBackPlease();
 
                 // Disables backspace on page except on input fields and textarea..
                 document.body.onkeydown = function (e) {
@@ -100,11 +100,61 @@
             }
         });
 
+        window.addEventListener('resize', (event) => {
+            onResize();
+        });
+
+        window.addEventListener('load', (event) => {
+            onResize();
+        });
+
+        const onResize = function(e){
+            const availWidth = window.innerWidth;
+            const availHeight = window.innerHeight;
+            let itemWidth = 0;
+            let itemHeight = 0;
+            const url = new URL(window.location.href);
+            itemWidth = url.searchParams.get('width') || itemWidth;
+            itemHeight = url.searchParams.get('height') || itemHeight;
+            // console.log('availWidth', availWidth, 'availHeight', availHeight, 'itemWidth', itemWidth, 'itemHeight', itemHeight);
+            if(itemWidth && itemHeight){
+              const scalingFactor = getScalingFactor(parseInt(availWidth), parseInt(availHeight), parseInt(itemWidth), parseInt(itemHeight));
+              const root = document.getElementById('ee4basicsRoot');
+              const wrapper = document.getElementById('appWrapper');
+              if(root && wrapper){
+                wrapper.style.overflow = 'hidden';
+                wrapper.style.width = `${itemWidth*scalingFactor}px`;
+                wrapper.style.height = `${itemHeight*scalingFactor}px`;
+                wrapper.style.margin = '0 auto';                
+                root.style.transform = `scale(${scalingFactor})`;
+                root.style.transformOrigin = '0 0';
+                root.style.width = `${itemWidth}px`;
+                root.style.height = `${itemHeight}px`;
+              }
+            }
+        }
+
+        const getScalingFactor = function(availWidth, availHeight, itemWidth, itemHeight){
+              let sfh = 1;
+              let sfw = 1;
+              let scalingFactor = 1;
+
+              // if (availHeight < itemHeight)
+              sfh = Math.ceil((availHeight * 1000) / itemHeight) / 1000;
+              // if (availWidth < itemWidth)
+              sfw = Math.ceil((availWidth * 1000) / itemWidth) / 1000;
+              scalingFactor = sfw;
+                if (sfh < 1 || sfw < 1) scalingFactor = Math.min(sfh, sfw);
+              return scalingFactor;
+        }
+
     </script>         
   </head>
   <body style="height: 100%;"  oncontextmenu="return false;"> 
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div class="wrap" id="ee4basicsRoot"></div>
+    <div id="appWrapper" style="width: 100%; overflow: hidden;">
+      <div class="wrap" id="ee4basicsRoot"></div>
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
