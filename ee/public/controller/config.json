@@ -6,9 +6,11 @@
         },
     "mathJaxCdnUrl": "math-jax unknown",
     "players": [
-        { "playerId": "A", "runtimeVersion": "10.0.0", "frameContentFile": "frameContent_10_0.html" },
-        { "playerId": "B", "runtimeVersion": "9.9.0", "frameContentFile": "frameContent_9_9.html" },
-        { "playerId": "C", "runtimeVersion": "9.6.0", "frameContentFile": "frameContent_9_6.html" }
+        { "playerId": "A", "runtimeVersion": "10.2.0", "frameContentFile": "frameContent_10_2.html" },
+        { "playerId": "B", "runtimeVersion": "10.1.0", "frameContentFile": "frameContent_10_1.html" },
+        { "playerId": "C", "runtimeVersion": "10.0.0", "frameContentFile": "frameContent_10_0.html" },
+        { "playerId": "D", "runtimeVersion": "9.9.0", "frameContentFile": "frameContent_9_9.html" },
+        { "playerId": "E", "runtimeVersion": "9.8.0", "frameContentFile": "frameContent_9_8.html" }
     ],
     "showPlayerInfo": false
 }
