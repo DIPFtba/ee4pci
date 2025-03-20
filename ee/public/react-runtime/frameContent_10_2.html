@@ -16,12 +16,20 @@
     <!-- Use this script snippet for initial configuration of the TaskPlayer if you don't provide parameters in the URL calling this page. -->    
     <script> 
         window.cba_runtime_config = {
-          initialWaitingMessagePrimary: 'TaskPlayer running version 10.0.', 
-          initialWaitingMessageSecondary: 'Waiting for controller to start task...'
+          initialWaitingMessagePrimary: 'Testanwendung wird geladen ...', 
+          initialWaitingMessageSecondary: 'Bitte warten Sie einen Moment.'
         }
     </script>
 
    <script type="text/javascript" src="./js/10/main.6c61a210.js"></script>
-
+   <script>
+        window.addEventListener('load', function() {
+            let timeout = setTimeout(function() {
+                if(document.querySelector('#root > .appDivContainer > .appDiv > div') === null) {
+                  document.location.reload();
+                }
+            }, 8000);
+        });
+   </script>
   </body>
 </html>
